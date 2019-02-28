@@ -14,6 +14,8 @@ test_2 = true || false
 # test_3 = should be false
 test_3 = false && false
 
+# Conditional assignemtn (only add variable if it isn't assigned already)
+favorite_language ||= "PHP"
 
 #string manipulation
 puts "Mark".length
@@ -24,6 +26,7 @@ puts "timmy".capitalize!
 
 #Get data, if, elsif, else & case (Ruby's answer to a switch statement)
 puts "It's true!" if true #one line if statement
+puts "It's true!" unless false #one line "unless", will always print "It's true!" since nothing has set things to false
 
 print "Integer please: "
 user_num = Integer(gets.chomp)
@@ -35,16 +38,23 @@ else
   puts "You picked zero!"
 end
 
-case language
-when "JS"
-  puts "Websites!"
-when "Python"
-  puts "Science!"
-when "Ruby"
-  puts "Web apps!"
-else
-  puts "I don't know!"
+puts "Hello there!"
+greeting = gets.chomp
+case greeting
+  when "English"
+    puts "Hello!"
+  when "French"
+    puts "Bonjour!"
+  when "German"
+    puts "Guten Tag!"
+    when "Finnish"
+    puts "Haloo!"
+  else
+    puts "I don't know that language!"
 end
+
+#Ternary operator
+puts 1 < 2 ? "1 is less than 2!" : "1 is not less than 2."
 
 
 #unless
