@@ -317,3 +317,57 @@ else
 end
 
 
+my_array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+my_array.each { |num| puts num unless num % 2 !=0 }
+
+
+#print numbers up to & down to 5, so 1 2 3 4 5 and 5 4 3 2 1, also works with letters eg A B C D
+1.upto(5) { |num| print num, " " }
+5.downto(1) { |num| print num, " " }
+"A".upto("D") { |letter| print letter, " "}
+
+#.respond_to? takes a symbol and returns true if an object can receive that method and false
+age = 26
+age.respond_to?(:next)
+
+# << can be used instead of "push" on arrays and += on strings
+alphabet = ["a", "b", "c"]
+alphabet<< "d" # Update me!
+caption = "A giraffe surrounded by "
+puts caption << "weezards!" # Me, too!
+
+
+# doing this #{} is like casting so we convert something from the array into an actual string rather than .to_s
+favorite_things = ["Ruby", "espresso", "candy"]
+puts "A few of my favorite things:"
+favorite_things.each do |thing|
+  puts "I love #{thing}!"
+end
+
+#case aka "switch statement in JS & PHP"
+puts "What's your favorite language?"
+language = gets.chomp
+case language
+when "Ruby"
+  puts "Ruby is great for web apps!"
+when "Python"
+  puts "Python is great for science."
+when "JavaScript"
+  puts "JavaScript makes websites awesome."
+when "HTML"
+  puts "HTML is what websites are made of!"
+when "CSS"
+  puts "CSS makes websites pretty."
+else
+  puts "I don't know that language!"
+end
+
+#Implicit Return (avoid having to use return statement)
+def square(num)
+  num*num
+end
+
+#Times example to avoid for loop
+3.times do
+  puts "I'm a refactoring master!"
+end
