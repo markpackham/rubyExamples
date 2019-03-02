@@ -404,7 +404,6 @@ class MyClass
   $my_variable = "Hello!"
  end
  puts $my_variable
-
  
  class Person
   def initialize(name,age,profession)
@@ -413,3 +412,19 @@ class MyClass
     @profession = profession
   end
 end
+
+
+# .collect example
+fibs = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
+double = Proc.new {|x| x * 2}
+doubled_fibs = fibs.collect(&double)
+puts doubled_fibs
+
+# .yield example
+def block_test
+  puts "We're in the method!"
+  puts "Yielding to the block..."
+  yield
+  puts "We're back in the method!"
+end
+block_test { puts ">>> We're in the block!" }
