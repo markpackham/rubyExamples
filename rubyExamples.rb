@@ -420,7 +420,7 @@ double = Proc.new {|x| x * 2}
 doubled_fibs = fibs.collect(&double)
 puts doubled_fibs
 
-# .yield example
+# .yield example, yield allows you to customise a method depending on your needs.
 def block_test
   puts "We're in the method!"
   puts "Yielding to the block..."
@@ -428,3 +428,29 @@ def block_test
   puts "We're back in the method!"
 end
 block_test { puts ">>> We're in the block!" }
+
+
+def yield_name(name)
+  puts "In the method! Let's yield."
+  yield("Kim")
+  puts "In between the yields!"
+  yield(name)
+  puts "Block complete! Back in the method."
+end
+yield_name("Eric") { |n| puts "My name is #{n}." }
+yield_name("Mark") { |n| puts "My name is #{n}." }
+
+
+def double(num)
+  yield(num*2)
+end
+double(2) { |n| puts "My num is #{n}." }
+
+
+#Proc
+#Proc objects are blocks of code that have been bound to a set of local variables. Once bound, 
+#the code may be called in different contexts and still access those variables.
+multiples_of_3 = Proc.new do |n|
+  n % 3 == 0
+end
+print (1..100).to_a.select(&multiples_of_3)
