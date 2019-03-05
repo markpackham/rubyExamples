@@ -15,6 +15,9 @@ A block is just a bit of code between do..end or {}.
 =end
 
 
+#Get current time
+time = Time.now
+
 #true & false, AND OR
 is_true = 2 != 3
 is_false = 2 == 3
@@ -653,3 +656,99 @@ class Dragon <  Creature
     return "Breathes fire!"
   end
 end
+
+
+#Override sub class method with superclasses
+class Creature
+  def initialize(name)
+    @name = name
+  end
+  
+  def fight
+    return "Punch to the chops!"
+  end
+end
+class Dragon < Creature
+  def fight
+    puts "Instead of breathing fire. . . "
+    super
+  end
+end
+
+
+#set instances to variables
+class Message 
+  def initialize(from, to)
+    @from = from 
+    @to = to 
+  end
+end
+
+
+#class variable @@
+class Message 
+  @@messages_sent = 0
+  def initialize(from, to)
+    @from = from 
+    @to = to 
+    @@messages_sent +=1 
+  end
+end
+my_message = Message.new('Mio','Meow')
+
+
+#use super class' parameters in sub class
+class Message 
+  @@messages_sent = 0
+  def initialize(from, to)
+    @from = from 
+    @to = to 
+    @@messages_sent +=1 
+  end
+end
+my_message = Message.new('Mio','Meow')
+class Email < Message
+   def initialize(from, to)
+     super
+   end
+end
+
+
+
+
+
+class Computer
+  @@users = {}
+  def initialize(username, password)
+    @username = username
+    @password = password
+    @files = {}
+    @@users[username] = password
+  end
+  def create(filename)
+    time = Time.now
+    @files[filename] = time
+    puts "#{filename} was created at #{time} by #{@username}. "
+  end
+end
+
+
+#Class example
+class Computer
+  @@users = {}
+  def initialize(username, password)
+    @username = username
+    @password = password
+    @files = {}
+    @@users[username] = password
+  end
+  def create(filename)
+    time = Time.now
+    @files[filename] = time
+    puts "#{filename} was created at #{time} by #{@username}. "
+  end
+  def Computer.get_users
+    @@users
+  end
+end
+my_computer = Computer.new("user","pass")
