@@ -4,6 +4,17 @@ This is a multi line
 comment
 =end
 
+
+#Block vs Proc vs Lambda
+=begin
+A block is just a bit of code between do..end or {}. 
+  It's not an object on its own, but it can be passed to methods like .each or .select.
+  Proc is a saved block we can use over and over.
+  Lambda is just like a proc, only it cares about the number of arguments it 
+  gets and it returns to its calling method rather than returning immediately.
+=end
+
+
 #true & false, AND OR
 is_true = 2 != 3
 is_false = 2 == 3
@@ -236,16 +247,13 @@ movie_ratings.each_key { |k| puts "#{k}"}
 movie_ratings.each_value { |v| puts "#{v}"}
 
 
-
 movies = {
   StarWars: 4.8, 
   Divergent: 4.7
   }
 
 puts "What would you like to do? "
-
 choice = gets.chomp
-
 case choice
 when "add"
   puts "What movie would you like to add? "
@@ -478,3 +486,153 @@ can_ride_3 = group_3.select(&over_4_feet)
 puts can_ride_1
 puts can_ride_2
 puts can_ride_3
+
+
+def greeter
+  yield
+end
+phrase = Proc.new { puts "Hello there!" }
+greeter(&phrase)
+
+
+#.call (you can use this to call a Proc instead of the &myProc solution)
+hi = Proc.new { puts "Hello!" }
+hi.call
+
+
+#Procs & symbols
+numbers_array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+strings_array = numbers_array.map(&:to_s)
+puts strings_array
+
+
+#Lambda (a lot like a Proc)
+=begin
+Like procs, lambdas are objects. The similarities don't stop there: with the exception of a bit of syntax and 
+a few behavioral quirks, lambdas are identical to procs.
+
+lambda checks the number of arguments passed to it, while a proc does not
+when a lambda returns, it passes control back to the calling method; when a proc returns, 
+it does so immediately, without going back to the calling method
+=end
+def lambda_demo(a_lambda)
+  puts "I'm the method!"
+  a_lambda.call
+end
+lambda_demo(lambda { puts "I'm the lambda!" })
+
+
+strings = ["leonardo", "donatello", "raphael", "michaelangelo"]
+symbolize = lambda {|x| x.to_sym}
+symbols = strings.collect(&symbolize)
+print symbols
+
+
+def batman_ironman_proc
+  victor = Proc.new { return "Batman will win!" } #Batman will win! for Proc
+  victor.call
+  "Iron Man will win!"
+end
+puts batman_ironman_proc
+def batman_ironman_lambda
+  victor = lambda { return "Batman will win!" }
+  victor.call
+  "Iron Man will win!" #Iron Man will win! for Lambda
+end
+puts batman_ironman_lambda
+
+
+#lambda using .is_a? to check a type (such as a Symbol)
+my_array = ["raindrops", :kettles, "whiskers", :mittens, :packages]
+symbol_filter = lambda {|x| x.is_a? Symbol}
+symbols = my_array.select(&symbol_filter)
+my_array = ["raindrops", :kettles, "whiskers", :mittens, :packages]
+puts symbols
+
+
+#pull out all the Ints
+odds_n_ends = [:weezard, 42, "Trady Blix", 3, true, 19, 12.345]
+ints = odds_n_ends.select {|x|x.is_a? Integer}
+puts ints
+
+
+#use Proc & .select to filter out those under 100
+ages = [23, 101, 7, 104, 11, 94, 100, 121, 101, 70, 44]
+under_100 = Proc.new { |x| x < 100 }
+youngsters = ages.select(&under_100)
+puts youngsters
+
+
+#lambda that checks for letters before M
+crew = {
+  captain: "Picard",
+  first_officer: "Riker",
+  lt_cdr: "Data",
+  lt: "Worf",
+  ensign: "Ro",
+  counselor: "Troi",
+  chief_engineer: "LaForge",
+  doctor: "Crusher"
+}
+first_half = lambda { |x,y| y<"M"}
+a_to_m = crew.select(&first_half)
+puts a_to_m
+
+
+#Class
+class Language
+  def initialize(name, creator)
+    @name = name
+    @creator = creator
+  end
+  def description
+    puts "I'm #{@name} and I was created by #{@creator}!"
+  end
+end
+ruby = Language.new("Ruby", "Yukihiro Matsumoto")
+python = Language.new("Python", "Guido van Rossum")
+javascript = Language.new("JavaScript", "Brendan Eich")
+ruby.description
+python.description
+javascript.description
+
+#Count numbers of person instances (created objects)
+class Person
+  # Set your class variable to 0 on line 3
+  @@people_count = 0
+  def initialize(name)
+    @name = name
+    # Increment your class variable on line 8
+    @@people_count += 1
+  end
+  def self.number_of_instances
+    # Return your class variable on line 13
+    return @@people_count
+  end
+end
+matz = Person.new("Yukihiro")
+dhh = Person.new("David")
+puts "Number of Person instances: #{Person.number_of_instances}"
+
+
+def create_record(attributes, raise_error = false)
+  record = build_record(attributes)
+  yield(record) if block_given?
+  saved = record.save
+  set_new_record(record)
+  raise RecordInvalid.new(record) if !saved && raise_error
+  record
+end
+
+
+#Class inheritence (Grab the super class' abilities)
+class ApplicationError
+  def display_error
+    puts "Error! Error!"
+  end
+end
+
+class SuperBadError < ApplicationError
+end
+err = SuperBadError.new
+err.display_error
