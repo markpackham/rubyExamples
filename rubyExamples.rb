@@ -752,3 +752,43 @@ class Computer
   end
 end
 my_computer = Computer.new("user","pass")
+
+
+#attr_reader & attr_writer (getters & setters for Ruby)
+class Person
+  attr_reader :name
+  attr_writer :job
+  def initialize(name, job)
+    @name = name
+    @job = job
+  end
+end
+
+#attr_accessor is a getter & setter al in 1
+class Person
+  attr_reader :name
+  attr_accessor :job
+  def initialize(name, job)
+    @name = name
+    @job = job
+  end
+end
+
+
+#module is ruby's answer to packages where we store classes you can't create instances 
+#& can't have subclasses they're more like folders
+module Circle
+  PI = 3.141592653589793
+  def Circle.area(radius)
+    PI * radius**2
+  end
+  def Circle.circumference(radius)
+    2 * PI * radius
+  end
+end
+
+#Constants example
+#Ruby constants are written in ALL_CAPS and are separated with underscores if there's more than one word
+module MyLibrary
+  FAVE_BOOK = "Bret Hart"
+end
