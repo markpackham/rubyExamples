@@ -1,3 +1,7 @@
+# Unless example
+puts 'I have more letters than "Chris"' unless 'Chris'.length == 4
+
+
 # If Else statement
 puts 'Hello, and welcome to 7th grade English.'
 puts 'My name is Mrs. Gabbard.  And your name is...?'
